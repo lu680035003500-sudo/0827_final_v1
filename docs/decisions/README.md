@@ -1,0 +1,1 @@
+- [llm-handoff](llm-handoff.md) — Read when implementing or changing the "ChatGPT·Claude로 열기" export action.
