@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { DogMascot } from "./dog-mascot";
 import { TetrisGame } from "@/components/tetris/tetris-game";
+import { LuckyDrawModal } from "@/components/lucky-draw/lucky-draw-modal";
 
 import {
   PROMPT_PRESETS,
@@ -35,6 +36,7 @@ export function Converter() {
   const [customPrompt, setCustomPrompt] = useState("");
   const [notice, setNotice] = useState("");
   const [showGame, setShowGame] = useState(false);
+  const [showLuckyDraw, setShowLuckyDraw] = useState(false);
 
   const resolvedPrompt = resolvePromptText(promptChoice, customPrompt);
 
@@ -150,7 +152,12 @@ export function Converter() {
         게임시작
       </Button>
 
+      <Button type="button" variant="secondary" onClick={() => setShowLuckyDraw(true)}>
+        행운뽑기
+      </Button>
+
       {showGame && <TetrisGame onClose={() => setShowGame(false)} />}
+      {showLuckyDraw && <LuckyDrawModal onClose={() => setShowLuckyDraw(false)} />}
 
       {status === "error" && (
         <p role="alert" className="text-sm text-destructive">
