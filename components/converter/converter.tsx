@@ -30,7 +30,12 @@ export function Converter() {
         테트리스게임하기
       </Button>
 
-      <Button type="button" variant="secondary" onClick={() => setShowLuckyDraw(true)}>
+      <Button
+        type="button"
+        variant="secondary"
+        className="bg-sky-400 text-black hover:bg-sky-500"
+        onClick={() => setShowLuckyDraw(true)}
+      >
         행운뽑기
       </Button>
 
