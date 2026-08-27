@@ -15,7 +15,7 @@ const SPAWN_INTERVAL_MS = 700;
 
 let nextHoleId = 0;
 
-const CRACK_ANGLES = [10, 55, 95, 140, 175, 220, 265, 310];
+const UFO_LIGHT_X = [8, 14, 20, 26, 32];
 
 export function BulletHoles() {
   const [holes, setHoles] = useState<Hole[]>([]);
@@ -63,27 +63,11 @@ function BulletHole({ hole }: { hole: Hole }) {
         className="h-full w-full animate-bullet-pop drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
         style={{ rotate: `${hole.rotation}deg` }}
       >
-        <circle cx="20" cy="20" r="9" fill="#161616" />
-        <circle cx="20" cy="20" r="9" fill="none" stroke="#4a4a4a" strokeWidth="1.2" />
-        {CRACK_ANGLES.map((angle) => {
-          const rad = (angle * Math.PI) / 180;
-          const x1 = 20 + Math.cos(rad) * 8;
-          const y1 = 20 + Math.sin(rad) * 8;
-          const x2 = 20 + Math.cos(rad) * (15 + (angle % 30));
-          const y2 = 20 + Math.sin(rad) * (15 + (angle % 30));
-          return (
-            <line
-              key={angle}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="#161616"
-              strokeWidth="1.1"
-              strokeLinecap="round"
-            />
-          );
-        })}
+        <ellipse cx="20" cy="16" rx="8" ry="7" fill="#7dd3fc" fillOpacity="0.85" stroke="#0ea5e9" strokeWidth="1" />
+        <ellipse cx="20" cy="24" rx="15" ry="6" fill="#94a3b8" stroke="#475569" strokeWidth="1" />
+        {UFO_LIGHT_X.map((x) => (
+          <circle key={x} cx={x} cy="24" r="1.6" fill="#facc15" />
+        ))}
       </svg>
     </div>
   );
