@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { cn } from "@/lib/utils";
+
 import {
   CHOICES,
   CHOICE_EMOJI,
@@ -29,6 +31,7 @@ export function RpsGame({ onClose, score, onWin, onLose }: RpsGameProps) {
   const [playerChoice, setPlayerChoice] = useState<Choice | null>(null);
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
+  const [roundId, setRoundId] = useState(0);
 
   function handlePlay(choice: Choice) {
     const computer = randomChoice();
@@ -36,6 +39,7 @@ export function RpsGame({ onClose, score, onWin, onLose }: RpsGameProps) {
     setPlayerChoice(choice);
     setComputerChoice(computer);
     setOutcome(result);
+    setRoundId((id) => id + 1);
     if (result === "win") onWin();
     if (result === "lose") onLose();
   }
@@ -58,11 +62,14 @@ export function RpsGame({ onClose, score, onWin, onLose }: RpsGameProps) {
         <div className="flex gap-3">
           {CHOICES.map((choice) => (
             <button
-              key={choice}
+              key={`${choice}-${roundId}`}
               type="button"
               onClick={() => handlePlay(choice)}
               aria-label={CHOICE_LABELS[choice]}
-              className="flex h-14 w-14 items-center justify-center rounded-full border border-border bg-background text-2xl transition-transform hover:scale-105 active:scale-95"
+              className={cn(
+                "flex h-14 w-14 items-center justify-center rounded-full border border-border bg-background text-2xl transition-transform hover:scale-105 active:scale-95",
+                playerChoice === choice && "animate-rps-flash border-yellow-400"
+              )}
             >
               {CHOICE_EMOJI[choice]}
             </button>
