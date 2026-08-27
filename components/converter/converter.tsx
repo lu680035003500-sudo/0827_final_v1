@@ -15,6 +15,7 @@ type Scores = {
   tetris: number;
   luckyDraw: number;
   ladder: number;
+  rps: number;
 };
 
 export function Converter() {
@@ -22,8 +23,8 @@ export function Converter() {
   const [showLuckyDraw, setShowLuckyDraw] = useState(false);
   const [showLadderGame, setShowLadderGame] = useState(false);
   const [showRps, setShowRps] = useState(false);
-  const [scores, setScores] = useState<Scores>({ tetris: 0, luckyDraw: 0, ladder: 0 });
-  const totalScore = scores.tetris + scores.luckyDraw + scores.ladder;
+  const [scores, setScores] = useState<Scores>({ tetris: 0, luckyDraw: 0, ladder: 0, rps: 0 });
+  const totalScore = scores.tetris + scores.luckyDraw + scores.ladder + scores.rps;
 
   function addTetrisScore(lines: number) {
     setScores((prev) => ({ ...prev, tetris: prev.tetris + lines * 10 }));
@@ -35,6 +36,14 @@ export function Converter() {
 
   function addLadderScore() {
     setScores((prev) => ({ ...prev, ladder: prev.ladder + 10 }));
+  }
+
+  function addRpsWinScore() {
+    setScores((prev) => ({ ...prev, rps: prev.rps + 10 }));
+  }
+
+  function addRpsLoseScore() {
+    setScores((prev) => ({ ...prev, rps: prev.rps - 10 }));
   }
 
   return (
@@ -106,7 +115,14 @@ export function Converter() {
           onWin={addLadderScore}
         />
       )}
-      {showRps && <RpsGame onClose={() => setShowRps(false)} />}
+      {showRps && (
+        <RpsGame
+          onClose={() => setShowRps(false)}
+          score={scores.rps}
+          onWin={addRpsWinScore}
+          onLose={addRpsLoseScore}
+        />
+      )}
     </div>
   );
 }

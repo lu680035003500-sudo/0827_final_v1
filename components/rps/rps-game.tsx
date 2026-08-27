@@ -18,16 +18,26 @@ const OUTCOME_TEXT: Record<Outcome, string> = {
   draw: "비겼습니다",
 };
 
-export function RpsGame({ onClose }: { onClose: () => void }) {
+type RpsGameProps = {
+  onClose: () => void;
+  score: number;
+  onWin: () => void;
+  onLose: () => void;
+};
+
+export function RpsGame({ onClose, score, onWin, onLose }: RpsGameProps) {
   const [playerChoice, setPlayerChoice] = useState<Choice | null>(null);
   const [computerChoice, setComputerChoice] = useState<Choice | null>(null);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
 
   function handlePlay(choice: Choice) {
     const computer = randomChoice();
+    const result = judge(choice, computer);
     setPlayerChoice(choice);
     setComputerChoice(computer);
-    setOutcome(judge(choice, computer));
+    setOutcome(result);
+    if (result === "win") onWin();
+    if (result === "lose") onLose();
   }
 
   return (
@@ -43,6 +53,7 @@ export function RpsGame({ onClose }: { onClose: () => void }) {
         </button>
 
         <h2 className="text-lg font-semibold">가위바위보</h2>
+        <p className="text-sm text-muted-foreground">점수: {score}</p>
 
         <div className="flex gap-3">
           {CHOICES.map((choice) => (
