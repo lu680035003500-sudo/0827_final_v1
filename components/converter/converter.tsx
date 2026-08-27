@@ -126,7 +126,7 @@ export function Converter() {
           className="flex aspect-square h-auto w-full flex-col items-center justify-center gap-1 rounded-2xl border-2 border-black/30 bg-purple-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-purple-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowRps(true)}
         >
-          <span className="text-5xl">✂️</span>
+          <span className="text-5xl">✌️</span>
           <span className="text-2xl font-bold">가위바위보</span>
         </Button>
 
