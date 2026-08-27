@@ -9,6 +9,7 @@ import { TetrisGame } from "@/components/tetris/tetris-game";
 import { LuckyDrawModal } from "@/components/lucky-draw/lucky-draw-modal";
 import { LadderGame } from "@/components/ladder-game/ladder-game";
 import { ArcadeCabinet } from "@/components/arcade/arcade-cabinet";
+import { RpsGame } from "@/components/rps/rps-game";
 
 type Scores = {
   tetris: number;
@@ -20,6 +21,7 @@ export function Converter() {
   const [showGame, setShowGame] = useState(false);
   const [showLuckyDraw, setShowLuckyDraw] = useState(false);
   const [showLadderGame, setShowLadderGame] = useState(false);
+  const [showRps, setShowRps] = useState(false);
   const [scores, setScores] = useState<Scores>({ tetris: 0, luckyDraw: 0, ladder: 0 });
   const totalScore = scores.tetris + scores.luckyDraw + scores.ladder;
 
@@ -76,6 +78,15 @@ export function Converter() {
         >
           미니사다리 게임
         </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="rounded-full border-2 border-black/30 bg-purple-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-purple-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowRps(true)}
+        >
+          가위바위보
+        </Button>
       </ArcadeCabinet>
 
       {showGame && (
@@ -95,6 +106,7 @@ export function Converter() {
           onWin={addLadderScore}
         />
       )}
+      {showRps && <RpsGame onClose={() => setShowRps(false)} />}
     </div>
   );
 }
