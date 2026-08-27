@@ -43,7 +43,7 @@ export function SideUfo({ side }: SideUfoProps) {
         </svg>
 
         <div
-          className="absolute top-full left-1/2 h-14 w-10 -translate-x-1/2 animate-beam-glow"
+          className="absolute top-full left-1/2 h-[13.75rem] w-10 -translate-x-1/2 animate-beam-glow"
           style={{
             background: "linear-gradient(to bottom, rgba(250,204,21,0.75), rgba(125,211,252,0))",
             clipPath: "polygon(38% 0%, 62% 0%, 100% 100%, 0% 100%)",
@@ -52,7 +52,7 @@ export function SideUfo({ side }: SideUfoProps) {
 
         <div
           className="absolute top-full left-1/2 -translate-x-1/2 animate-bear-abduct"
-          style={{ marginTop: "2.75rem", animationDelay: side === "right" ? "1.4s" : "0s" }}
+          style={{ marginTop: "13.75rem", animationDelay: side === "right" ? "1.4s" : "0s" }}
         >
           <TeddyBear className="h-9 w-9" />
         </div>
