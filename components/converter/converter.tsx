@@ -27,7 +27,7 @@ export function Converter() {
       </header>
 
       <Button type="button" variant="secondary" onClick={() => setShowGame(true)}>
-        게임시작
+        테트리스게임하기
       </Button>
 
       <Button type="button" variant="secondary" onClick={() => setShowLuckyDraw(true)}>
