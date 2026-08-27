@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { DogMascot } from "./dog-mascot";
 import { TetrisGame } from "@/components/tetris/tetris-game";
 import { LuckyDrawModal } from "@/components/lucky-draw/lucky-draw-modal";
 import { LadderGame } from "@/components/ladder-game/ladder-game";
 import { ArcadeCabinet } from "@/components/arcade/arcade-cabinet";
-import { GameCorridor, type CorridorButton } from "@/components/arcade/game-corridor";
 import { RpsGame } from "@/components/rps/rps-game";
 import { ScratchLotteryModal } from "@/components/scratch-lottery/scratch-lottery-modal";
 import { SlotMachineGame } from "@/components/slot-machine/slot-machine-game";
@@ -77,40 +77,6 @@ export function Converter() {
     setScores((prev) => ({ ...prev, slotMachine: prev.slotMachine + 50 }));
   }
 
-  const corridorItems: CorridorButton[] = [
-    { key: "tetris", label: "테트리스", colorClass: "bg-red-500 text-white", onClick: () => setShowGame(true) },
-    {
-      key: "luckyDraw",
-      label: "행운뽑기",
-      colorClass: "bg-sky-400 text-black",
-      onClick: () => setShowLuckyDraw(true),
-    },
-    {
-      key: "ladder",
-      label: "미니사다리",
-      colorClass: "bg-green-500 text-white",
-      onClick: () => setShowLadderGame(true),
-    },
-    {
-      key: "rps",
-      label: "가위바위보",
-      colorClass: "bg-purple-500 text-white",
-      onClick: () => setShowRps(true),
-    },
-    {
-      key: "scratch",
-      label: "복권긁기",
-      colorClass: "bg-amber-500 text-white",
-      onClick: () => setShowScratchLottery(true),
-    },
-    {
-      key: "slot",
-      label: "슬롯머신",
-      colorClass: "bg-indigo-500 text-white",
-      onClick: () => setShowSlotMachine(true),
-    },
-  ];
-
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 px-6 py-12">
       <header className="flex items-start justify-between gap-4">
@@ -126,7 +92,59 @@ export function Converter() {
       </header>
 
       <ArcadeCabinet score={totalScore}>
-        <GameCorridor items={corridorItems} />
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-2/3 sm:w-1/2 md:w-1/4 rounded-full border-2 border-black/30 bg-red-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-red-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowGame(true)}
+        >
+          테트리스
+        </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-2/3 sm:w-1/2 md:w-1/4 rounded-full border-2 border-black/30 bg-sky-400 text-black shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.5)] hover:bg-sky-400 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowLuckyDraw(true)}
+        >
+          행운뽑기
+        </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-2/3 sm:w-1/2 md:w-1/4 rounded-full border-2 border-black/30 bg-green-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-green-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowLadderGame(true)}
+        >
+          미니사다리
+        </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-2/3 sm:w-1/2 md:w-1/4 rounded-full border-2 border-black/30 bg-purple-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-purple-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowRps(true)}
+        >
+          가위바위보
+        </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-2/3 sm:w-1/2 md:w-1/4 rounded-full border-2 border-black/30 bg-amber-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-amber-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowScratchLottery(true)}
+        >
+          복권긁기
+        </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-2/3 sm:w-1/2 md:w-1/4 rounded-full border-2 border-black/30 bg-indigo-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-indigo-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowSlotMachine(true)}
+        >
+          슬롯머신
+        </Button>
       </ArcadeCabinet>
 
       {showGame && (
