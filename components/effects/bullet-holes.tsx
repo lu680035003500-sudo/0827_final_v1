@@ -12,21 +12,54 @@ type Hole = {
 
 const MAX_HOLES = 24;
 const SPAWN_INTERVAL_MS = 700;
+const MAX_SPAWN_ATTEMPTS = 10;
 
 let nextHoleId = 0;
 
 const UFO_LIGHT_X = [8, 14, 20, 26, 32];
+
+function getForbiddenZonePercent() {
+  const cabinet = document.getElementById("arcade-cabinet");
+  if (!cabinet) return null;
+  const rect = cabinet.getBoundingClientRect();
+  return {
+    left: (rect.left / window.innerWidth) * 100,
+    right: (rect.right / window.innerWidth) * 100,
+    top: (rect.top / window.innerHeight) * 100,
+    bottom: (rect.bottom / window.innerHeight) * 100,
+  };
+}
 
 export function BulletHoles() {
   const [holes, setHoles] = useState<Hole[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
+      const forbidden = getForbiddenZonePercent();
+
+      let x = Math.random() * 100;
+      let y = Math.random() * 100;
+      if (forbidden) {
+        let attempts = 0;
+        while (
+          x >= forbidden.left &&
+          x <= forbidden.right &&
+          y >= forbidden.top &&
+          y <= forbidden.bottom &&
+          attempts < MAX_SPAWN_ATTEMPTS
+        ) {
+          x = Math.random() * 100;
+          y = Math.random() * 100;
+          attempts++;
+        }
+        if (attempts >= MAX_SPAWN_ATTEMPTS) return;
+      }
+
       setHoles((prev) => {
         const hole: Hole = {
           id: nextHoleId++,
-          x: Math.random() * 100,
-          y: Math.random() * 100,
+          x,
+          y,
           size: 18 + Math.random() * 22,
           rotation: Math.random() * 360,
         };
