@@ -57,7 +57,7 @@ export function Converter() {
   }
 
   function addScratchLotteryWinScore() {
-    setScores((prev) => ({ ...prev, scratchLottery: prev.scratchLottery + 20 }));
+    setScores((prev) => ({ ...prev, scratchLottery: prev.scratchLottery + 50 }));
   }
 
   function addScratchLotteryLoseScore() {

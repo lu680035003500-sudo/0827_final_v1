@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 import { CryingBear } from "./crying-bear";
+import { JumpingBear } from "./jumping-bear";
 
 const CARD_WIDTH = 220;
 const CARD_HEIGHT = 120;
@@ -159,7 +160,7 @@ export function ScratchLotteryModal({
             <p role="status" className="text-sm font-medium">
               {prize === "win" ? "당첨되었습니다!" : "안타깝네요 다음 기회에"}
             </p>
-            {prize === "lose" && <CryingBear />}
+            {prize === "lose" ? <CryingBear /> : <JumpingBear />}
           </>
         )}
       </div>
