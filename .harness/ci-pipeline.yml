@@ -1,0 +1,52 @@
+pipeline:
+  name: 0827-final-v1 CI
+  identifier: 0827_final_v1_ci
+  # TODO: Harness UI에서 "Import from Git"으로 이 파일을 불러올 때
+  # orgIdentifier / projectIdentifier가 실제 조직·프로젝트 값으로 채워집니다.
+  orgIdentifier: default
+  projectIdentifier: TODO_PROJECT_IDENTIFIER
+  properties:
+    ci:
+      codebase:
+        # TODO: Harness에 등록된 GitHub 커넥터 식별자로 교체하세요
+        # (Harness UI > Connectors > GitHub 커넥터의 identifier).
+        connectorRef: TODO_GITHUB_CONNECTOR_REF
+        repoName: 0827_final_v1
+        build: <+input>
+  stages:
+    - stage:
+        name: Build and Verify
+        identifier: build_and_verify
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Install and verify
+                  identifier: install_and_verify
+                  spec:
+                    shell: Sh
+                    command: |-
+                      curl -fsSL https://bun.sh/install | bash
+                      export PATH="$HOME/.bun/bin:$PATH"
+                      bun install
+                      bun run typecheck
+                      bun run lint
+                      bun run test
+              - step:
+                  type: Run
+                  name: Build
+                  identifier: build
+                  spec:
+                    shell: Sh
+                    command: |-
+                      export PATH="$HOME/.bun/bin:$PATH"
+                      bun run build
