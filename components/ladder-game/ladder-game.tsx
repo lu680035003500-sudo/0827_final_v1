@@ -63,6 +63,7 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
   const [revealedCount, setRevealedCount] = useState(0);
   const [running, setRunning] = useState(false);
   const [result, setResult] = useState<{ lane: number; label: string } | null>(null);
+  const [resultGame, setResultGame] = useState<GameState | null>(null);
 
   const path = useMemo(
     () => (selectedLane === null ? null : tracePath(game.rungs, selectedLane)),
@@ -75,6 +76,7 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
     setSelectedLane(lane);
     setRevealedCount(0);
     setResult(null);
+    setResultGame(null);
   }
 
   function handleStart() {
@@ -82,6 +84,7 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
     setRunning(true);
     setRevealedCount(1);
 
+    const playedGame = game;
     let step = 1;
     const timer = setInterval(() => {
       step += 1;
@@ -89,8 +92,14 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
       if (step >= coords.length) {
         clearInterval(timer);
         const endLane = path[path.length - 1].lane;
-        setResult({ lane: endLane, label: game.outcomes[endLane] });
+        setResult({ lane: endLane, label: playedGame.outcomes[endLane] });
+        setResultGame(playedGame);
         setRunning(false);
+
+        // 당첨 여부가 갈리면 다음 판을 위해 사다리 배치를 새로 만든다.
+        setGame(createGame());
+        setSelectedLane(null);
+        setRevealedCount(0);
       }
     }, REVEAL_STEP_MS);
   }
@@ -101,6 +110,7 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
     setSelectedLane(null);
     setRevealedCount(0);
     setResult(null);
+    setResultGame(null);
   }
 
   const revealedCoords = coords.slice(0, revealedCount);
@@ -182,7 +192,7 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
           ))}
 
           {game.outcomes.map((label, lane) => {
-            const isLanded = result !== null && result.lane === lane;
+            const isLanded = result !== null && resultGame === game && result.lane === lane;
             const isWinBox = label === WIN_LABEL;
             const fill = isWinBox ? "#facc15" : isLanded ? "#94a3b8" : "var(--muted)";
             return (
