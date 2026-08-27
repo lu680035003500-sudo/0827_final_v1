@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { MiniBear } from "./mini-bear";
+import { BearFromBehind } from "./bear-from-behind";
 
 type ArcadeCabinetProps = {
   children: ReactNode;
@@ -27,8 +28,9 @@ export function ArcadeCabinet({ children, score }: ArcadeCabinetProps) {
 
         <MiniBear delay="0.3s" />
       </div>
-      <div className="flex flex-col gap-3 rounded-lg border border-black/30 bg-neutral-600/50 p-3">
-        {children}
+      <div className="flex items-end gap-3 rounded-lg border border-black/30 bg-neutral-600/50 p-3">
+        <BearFromBehind className="h-40 w-auto shrink-0" />
+        <div className="flex flex-1 flex-col items-center gap-3">{children}</div>
       </div>
     </div>
   );
