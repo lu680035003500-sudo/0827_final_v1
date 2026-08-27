@@ -138,7 +138,7 @@ export function LadderGame({ onClose, score, onWin }: LadderGameProps) {
           ✕
         </button>
 
-        <h2 className="text-lg font-semibold">미니사다리 게임</h2>
+        <h2 className="text-lg font-semibold">미니사다리</h2>
         <p className="text-sm text-muted-foreground">점수: {score}</p>
 
         <svg

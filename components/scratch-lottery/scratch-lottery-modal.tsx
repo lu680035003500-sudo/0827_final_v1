@@ -9,7 +9,7 @@ import { JumpingBear } from "./jumping-bear";
 
 const CARD_WIDTH = 220;
 const CARD_HEIGHT = 120;
-const REVEAL_THRESHOLD = 0.92;
+const REVEAL_THRESHOLD = 0.4;
 const BRUSH_RADIUS = 16;
 const WIN_PROBABILITY = 0.7;
 

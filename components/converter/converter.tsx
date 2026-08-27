@@ -85,7 +85,7 @@ export function Converter() {
           className="rounded-full border-2 border-black/30 bg-red-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-red-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowGame(true)}
         >
-          테트리스게임하기
+          테트리스
         </Button>
 
         <Button
@@ -103,7 +103,7 @@ export function Converter() {
           className="rounded-full border-2 border-black/30 bg-green-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-green-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowLadderGame(true)}
         >
-          미니사다리 게임
+          미니사다리
         </Button>
 
         <Button
