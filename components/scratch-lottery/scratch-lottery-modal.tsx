@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
+import { CryingBear } from "./crying-bear";
+
 const CARD_WIDTH = 220;
 const CARD_HEIGHT = 120;
 const REVEAL_THRESHOLD = 0.55;
@@ -153,9 +155,12 @@ export function ScratchLotteryModal({
         </div>
 
         {revealed && (
-          <p role="status" className="text-sm font-medium">
-            {prize === "win" ? "당첨되었습니다!" : "안타깝네요 다음 기회에"}
-          </p>
+          <>
+            <p role="status" className="text-sm font-medium">
+              {prize === "win" ? "당첨되었습니다!" : "안타깝네요 다음 기회에"}
+            </p>
+            {prize === "lose" && <CryingBear />}
+          </>
         )}
       </div>
     </div>
