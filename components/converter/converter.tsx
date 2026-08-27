@@ -41,7 +41,7 @@ export function Converter() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-semibold tracking-tight">
-              백유성의 프로젝트
+              백유성의 오락실
             </h1>
             <DogMascot />
           </div>

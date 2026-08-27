@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "백유성의 프로젝트",
+  title: "백유성의 오락실",
   description: "웹페이지 URL을 깨끗한 Markdown으로 변환해 LLM으로 바로 넘기는 서비스",
 };
 
