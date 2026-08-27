@@ -82,7 +82,7 @@ export function Converter() {
         <Button
           type="button"
           variant="secondary"
-          className="rounded-full border-2 border-black/30 bg-red-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-red-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          className="w-1/4 rounded-full border-2 border-black/30 bg-red-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-red-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowGame(true)}
         >
           테트리스
@@ -91,7 +91,7 @@ export function Converter() {
         <Button
           type="button"
           variant="secondary"
-          className="rounded-full border-2 border-black/30 bg-sky-400 text-black shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.5)] hover:bg-sky-400 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          className="w-1/4 rounded-full border-2 border-black/30 bg-sky-400 text-black shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.5)] hover:bg-sky-400 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowLuckyDraw(true)}
         >
           행운뽑기
@@ -100,7 +100,7 @@ export function Converter() {
         <Button
           type="button"
           variant="secondary"
-          className="rounded-full border-2 border-black/30 bg-green-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-green-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          className="w-1/4 rounded-full border-2 border-black/30 bg-green-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-green-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowLadderGame(true)}
         >
           미니사다리
@@ -109,7 +109,7 @@ export function Converter() {
         <Button
           type="button"
           variant="secondary"
-          className="rounded-full border-2 border-black/30 bg-purple-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-purple-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          className="w-1/4 rounded-full border-2 border-black/30 bg-purple-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-purple-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowRps(true)}
         >
           가위바위보
@@ -118,7 +118,7 @@ export function Converter() {
         <Button
           type="button"
           variant="secondary"
-          className="rounded-full border-2 border-black/30 bg-amber-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-amber-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          className="w-1/4 rounded-full border-2 border-black/30 bg-amber-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-amber-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
           onClick={() => setShowScratchLottery(true)}
         >
           복권긁기
