@@ -10,10 +10,30 @@ import { LuckyDrawModal } from "@/components/lucky-draw/lucky-draw-modal";
 import { LadderGame } from "@/components/ladder-game/ladder-game";
 import { ArcadeCabinet } from "@/components/arcade/arcade-cabinet";
 
+type Scores = {
+  tetris: number;
+  luckyDraw: number;
+  ladder: number;
+};
+
 export function Converter() {
   const [showGame, setShowGame] = useState(false);
   const [showLuckyDraw, setShowLuckyDraw] = useState(false);
   const [showLadderGame, setShowLadderGame] = useState(false);
+  const [scores, setScores] = useState<Scores>({ tetris: 0, luckyDraw: 0, ladder: 0 });
+  const totalScore = scores.tetris + scores.luckyDraw + scores.ladder;
+
+  function addTetrisScore(lines: number) {
+    setScores((prev) => ({ ...prev, tetris: prev.tetris + lines * 10 }));
+  }
+
+  function addLuckyDrawScore() {
+    setScores((prev) => ({ ...prev, luckyDraw: prev.luckyDraw + 10 }));
+  }
+
+  function addLadderScore() {
+    setScores((prev) => ({ ...prev, ladder: prev.ladder + 10 }));
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 px-6 py-12">
@@ -29,7 +49,7 @@ export function Converter() {
         <ThemeToggle />
       </header>
 
-      <ArcadeCabinet>
+      <ArcadeCabinet score={totalScore}>
         <Button
           type="button"
           variant="secondary"
@@ -58,9 +78,23 @@ export function Converter() {
         </Button>
       </ArcadeCabinet>
 
-      {showGame && <TetrisGame onClose={() => setShowGame(false)} />}
-      {showLuckyDraw && <LuckyDrawModal onClose={() => setShowLuckyDraw(false)} />}
-      {showLadderGame && <LadderGame onClose={() => setShowLadderGame(false)} />}
+      {showGame && (
+        <TetrisGame onClose={() => setShowGame(false)} onLinesCleared={addTetrisScore} />
+      )}
+      {showLuckyDraw && (
+        <LuckyDrawModal
+          onClose={() => setShowLuckyDraw(false)}
+          score={scores.luckyDraw}
+          onWin={addLuckyDrawScore}
+        />
+      )}
+      {showLadderGame && (
+        <LadderGame
+          onClose={() => setShowLadderGame(false)}
+          score={scores.ladder}
+          onWin={addLadderScore}
+        />
+      )}
     </div>
   );
 }

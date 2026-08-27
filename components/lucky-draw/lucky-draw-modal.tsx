@@ -29,7 +29,13 @@ function createBurst(): Particle[] {
   });
 }
 
-export function LuckyDrawModal({ onClose }: { onClose: () => void }) {
+type LuckyDrawModalProps = {
+  onClose: () => void;
+  score: number;
+  onWin: () => void;
+};
+
+export function LuckyDrawModal({ onClose, score, onWin }: LuckyDrawModalProps) {
   const [result, setResult] = useState<string | null>(null);
   const [burst, setBurst] = useState<Particle[] | null>(null);
   const [burstKey, setBurstKey] = useState(0);
@@ -40,6 +46,7 @@ export function LuckyDrawModal({ onClose }: { onClose: () => void }) {
     if (won) {
       setBurst(createBurst());
       setBurstKey((key) => key + 1);
+      onWin();
     } else {
       setBurst(null);
     }
@@ -58,6 +65,7 @@ export function LuckyDrawModal({ onClose }: { onClose: () => void }) {
         </button>
 
         <h2 className="text-lg font-semibold">행운뽑기</h2>
+        <p className="text-sm text-muted-foreground">점수: {score}</p>
 
         <div className="grid grid-cols-3 gap-3">
           {Array.from({ length: CLOVER_COUNT }, (_, index) => (

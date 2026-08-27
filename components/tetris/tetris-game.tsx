@@ -22,7 +22,12 @@ import {
 const TICK_MS = 600;
 const LINE_SCORES = [0, 100, 300, 500, 800];
 
-export function TetrisGame({ onClose }: { onClose: () => void }) {
+type TetrisGameProps = {
+  onClose: () => void;
+  onLinesCleared: (lines: number) => void;
+};
+
+export function TetrisGame({ onClose, onLinesCleared }: TetrisGameProps) {
   const [board, setBoard] = useState<Board>(() => createEmptyBoard());
   const [piece, setPiece] = useState<ActivePiece>(() => spawnPiece(randomPieceType()));
   const [score, setScore] = useState(0);
@@ -31,17 +36,22 @@ export function TetrisGame({ onClose }: { onClose: () => void }) {
   const boardRef = useRef(board);
   const pieceRef = useRef(piece);
   const gameOverRef = useRef(gameOver);
+  const onLinesClearedRef = useRef(onLinesCleared);
 
   useEffect(() => {
     boardRef.current = board;
     pieceRef.current = piece;
     gameOverRef.current = gameOver;
-  }, [board, piece, gameOver]);
+    onLinesClearedRef.current = onLinesCleared;
+  }, [board, piece, gameOver, onLinesCleared]);
 
   const lockAndSpawn = useCallback((finalPiece: ActivePiece) => {
     const merged = mergePiece(boardRef.current, finalPiece);
     const { board: cleared, cleared: lines } = clearLines(merged);
-    if (lines > 0) setScore((s) => s + LINE_SCORES[lines]);
+    if (lines > 0) {
+      setScore((s) => s + LINE_SCORES[lines]);
+      onLinesClearedRef.current(lines);
+    }
 
     const next = spawnPiece(randomPieceType());
     setBoard(cleared);

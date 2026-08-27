@@ -57,7 +57,13 @@ function createGame(): GameState {
   return { rungs: generateRungs(LANES, ROWS), outcomes: shuffleOutcomes(LANES) };
 }
 
-export function LadderGame({ onClose }: { onClose: () => void }) {
+type LadderGameProps = {
+  onClose: () => void;
+  score: number;
+  onWin: () => void;
+};
+
+export function LadderGame({ onClose, score, onWin }: LadderGameProps) {
   const [game, setGame] = useState<GameState>(() => createGame());
   const [selectedLane, setSelectedLane] = useState<number | null>(null);
   const [revealedCount, setRevealedCount] = useState(0);
@@ -92,9 +98,11 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
       if (step >= coords.length) {
         clearInterval(timer);
         const endLane = path[path.length - 1].lane;
-        setResult({ lane: endLane, label: playedGame.outcomes[endLane] });
+        const label = playedGame.outcomes[endLane];
+        setResult({ lane: endLane, label });
         setResultGame(playedGame);
         setRunning(false);
+        if (label === WIN_LABEL) onWin();
 
         // 당첨 여부가 갈리면 다음 판을 위해 사다리 배치를 새로 만든다.
         setGame(createGame());
@@ -131,6 +139,7 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
         </button>
 
         <h2 className="text-lg font-semibold">미니사다리 게임</h2>
+        <p className="text-sm text-muted-foreground">점수: {score}</p>
 
         <svg
           width={SVG_WIDTH}
