@@ -28,13 +28,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ko"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      className={cn(
+        "h-full",
+        "overflow-x-hidden",
+        "antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+        inter.variable
+      )}
       suppressHydrationWarning
     >
       <head>
         <ThemeInitScript />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col overflow-x-hidden">
         <LiveClock />
         <VolcanoEruption />
         {children}
