@@ -7,10 +7,12 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { DogMascot } from "./dog-mascot";
 import { TetrisGame } from "@/components/tetris/tetris-game";
 import { LuckyDrawModal } from "@/components/lucky-draw/lucky-draw-modal";
+import { LadderGame } from "@/components/ladder-game/ladder-game";
 
 export function Converter() {
   const [showGame, setShowGame] = useState(false);
   const [showLuckyDraw, setShowLuckyDraw] = useState(false);
+  const [showLadderGame, setShowLadderGame] = useState(false);
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 px-6 py-12">
@@ -39,8 +41,13 @@ export function Converter() {
         행운뽑기
       </Button>
 
+      <Button type="button" variant="secondary" onClick={() => setShowLadderGame(true)}>
+        미니사다리 게임
+      </Button>
+
       {showGame && <TetrisGame onClose={() => setShowGame(false)} />}
       {showLuckyDraw && <LuckyDrawModal onClose={() => setShowLuckyDraw(false)} />}
+      {showLadderGame && <LadderGame onClose={() => setShowLadderGame(false)} />}
     </div>
   );
 }
