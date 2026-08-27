@@ -10,12 +10,14 @@ import { LuckyDrawModal } from "@/components/lucky-draw/lucky-draw-modal";
 import { LadderGame } from "@/components/ladder-game/ladder-game";
 import { ArcadeCabinet } from "@/components/arcade/arcade-cabinet";
 import { RpsGame } from "@/components/rps/rps-game";
+import { ScratchLotteryModal } from "@/components/scratch-lottery/scratch-lottery-modal";
 
 type Scores = {
   tetris: number;
   luckyDraw: number;
   ladder: number;
   rps: number;
+  scratchLottery: number;
 };
 
 export function Converter() {
@@ -23,8 +25,16 @@ export function Converter() {
   const [showLuckyDraw, setShowLuckyDraw] = useState(false);
   const [showLadderGame, setShowLadderGame] = useState(false);
   const [showRps, setShowRps] = useState(false);
-  const [scores, setScores] = useState<Scores>({ tetris: 0, luckyDraw: 0, ladder: 0, rps: 0 });
-  const totalScore = scores.tetris + scores.luckyDraw + scores.ladder + scores.rps;
+  const [showScratchLottery, setShowScratchLottery] = useState(false);
+  const [scores, setScores] = useState<Scores>({
+    tetris: 0,
+    luckyDraw: 0,
+    ladder: 0,
+    rps: 0,
+    scratchLottery: 0,
+  });
+  const totalScore =
+    scores.tetris + scores.luckyDraw + scores.ladder + scores.rps + scores.scratchLottery;
 
   function addTetrisScore(lines: number) {
     setScores((prev) => ({ ...prev, tetris: prev.tetris + lines * 10 }));
@@ -44,6 +54,14 @@ export function Converter() {
 
   function addRpsLoseScore() {
     setScores((prev) => ({ ...prev, rps: prev.rps - 10 }));
+  }
+
+  function addScratchLotteryWinScore() {
+    setScores((prev) => ({ ...prev, scratchLottery: prev.scratchLottery + 20 }));
+  }
+
+  function addScratchLotteryLoseScore() {
+    setScores((prev) => ({ ...prev, scratchLottery: prev.scratchLottery - 10 }));
   }
 
   return (
@@ -96,6 +114,15 @@ export function Converter() {
         >
           가위바위보
         </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="rounded-full border-2 border-black/30 bg-amber-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-amber-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowScratchLottery(true)}
+        >
+          복권긁기
+        </Button>
       </ArcadeCabinet>
 
       {showGame && (
@@ -121,6 +148,14 @@ export function Converter() {
           score={scores.rps}
           onWin={addRpsWinScore}
           onLose={addRpsLoseScore}
+        />
+      )}
+      {showScratchLottery && (
+        <ScratchLotteryModal
+          onClose={() => setShowScratchLottery(false)}
+          score={scores.scratchLottery}
+          onWin={addScratchLotteryWinScore}
+          onLose={addScratchLotteryLoseScore}
         />
       )}
     </div>
