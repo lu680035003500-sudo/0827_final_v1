@@ -13,7 +13,7 @@
   --animate-rps-flash: rps-flash 0.35s ease-in-out 4;
   --animate-tear-fall: tear-fall 1.1s ease-in infinite;
   --animate-bear-jump: bear-jump 0.7s ease-in-out infinite;
-  --animate-bear-bob: bear-bob 0.8s ease-in-out infinite;
+  --animate-eagle-bob: eagle-bob 0.8s ease-in-out infinite;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -200,7 +200,7 @@
   }
 }
 
-@keyframes bear-bob {
+@keyframes eagle-bob {
   0%,
   100% {
     transform: translateY(0);

@@ -2,12 +2,12 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 
-import { TeddyBear } from "@/components/arcade/teddy-bear";
+import { Eagle } from "@/components/arcade/eagle";
 
 const MOVE_INTERVAL_MS = 4000;
 const TRANSITION_MS = 3500;
 
-export function WanderingBear() {
+export function WanderingEagle() {
   const [pos, setPos] = useState({ x: 50, y: 50 });
   const [facingLeft, setFacingLeft] = useState(false);
 
@@ -39,7 +39,7 @@ export function WanderingBear() {
       aria-hidden="true"
     >
       <div style={{ transform: `translate(-50%, -50%) scaleX(${facingLeft ? -1 : 1})` }}>
-        <TeddyBear className="h-20 w-auto animate-bear-bob" />
+        <Eagle className="h-20 w-auto animate-eagle-bob" />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeInitScript } from "@/components/theme/theme-init-script";
 import { VolcanoEruption } from "@/components/effects/volcano-eruption";
 import { LiveClock } from "@/components/clock/live-clock";
-import { WanderingBear } from "@/components/effects/wandering-bear";
+import { WanderingEagle } from "@/components/effects/wandering-eagle";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <LiveClock />
         <VolcanoEruption />
         {children}
-        <WanderingBear />
+        <WanderingEagle />
       </body>
     </html>
   );
