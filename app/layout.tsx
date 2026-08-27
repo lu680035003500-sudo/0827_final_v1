@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeInitScript } from "@/components/theme/theme-init-script";
-import { BulletHoles } from "@/components/effects/bullet-holes";
 import { VolcanoEruption } from "@/components/effects/volcano-eruption";
 import { LiveClock } from "@/components/clock/live-clock";
 import { WanderingBear } from "@/components/effects/wandering-bear";
@@ -40,7 +39,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <VolcanoEruption />
         {children}
         <WanderingBear />
-        <BulletHoles />
       </body>
     </html>
   );
