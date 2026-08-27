@@ -2,19 +2,33 @@
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
+import { Button } from "@/components/ui/button";
+
 import { CryingBear } from "./crying-bear";
 import { JumpingBear } from "./jumping-bear";
 
 const CARD_WIDTH = 220;
 const CARD_HEIGHT = 120;
-const REVEAL_THRESHOLD = 0.55;
+const REVEAL_THRESHOLD = 0.92;
 const BRUSH_RADIUS = 16;
-const WIN_PROBABILITY = 1 / 6;
+const WIN_PROBABILITY = 0.7;
 
 type Prize = "win" | "lose";
 
 function pickPrize(): Prize {
   return Math.random() < WIN_PROBABILITY ? "win" : "lose";
+}
+
+function drawCover(ctx: CanvasRenderingContext2D) {
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = "#9ca3af";
+  ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+  ctx.fillStyle = "#374151";
+  ctx.font = "bold 15px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("긁어서 확인하세요", CARD_WIDTH / 2, CARD_HEIGHT / 2);
+  ctx.globalCompositeOperation = "destination-out";
 }
 
 type ScratchLotteryModalProps = {
@@ -32,23 +46,14 @@ export function ScratchLotteryModal({
 }: ScratchLotteryModalProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const scratchingRef = useRef(false);
-  const [prize] = useState<Prize>(() => pickPrize());
+  const [prize, setPrize] = useState<Prize>(() => pickPrize());
   const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
-
-    ctx.globalCompositeOperation = "source-over";
-    ctx.fillStyle = "#9ca3af";
-    ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
-    ctx.fillStyle = "#374151";
-    ctx.font = "bold 15px sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("긁어서 확인하세요", CARD_WIDTH / 2, CARD_HEIGHT / 2);
-    ctx.globalCompositeOperation = "destination-out";
+    drawCover(ctx);
   }, []);
 
   function scratchAt(clientX: number, clientY: number) {
@@ -101,6 +106,15 @@ export function ScratchLotteryModal({
     checkProgress();
   }
 
+  function handleRescratch() {
+    setPrize(pickPrize());
+    setRevealed(false);
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!ctx) return;
+    drawCover(ctx);
+  }
+
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4">
       <div className="relative flex w-full max-w-xs flex-col items-center gap-4 rounded-xl border border-border bg-card p-6 text-card-foreground">
@@ -138,7 +152,7 @@ export function ScratchLotteryModal({
               style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
             >
               <div className="absolute inset-0 flex items-center justify-center bg-yellow-100 text-lg font-bold text-yellow-900">
-                {prize === "win" ? "🎉 당첨" : "꽝"}
+                {revealed && (prize === "win" ? "🎉 당첨" : "꽝")}
               </div>
               <canvas
                 ref={canvasRef}
@@ -154,6 +168,10 @@ export function ScratchLotteryModal({
             </div>
           </div>
         </div>
+
+        <Button type="button" variant="outline" onClick={handleRescratch}>
+          다시 긁기
+        </Button>
 
         {revealed && (
           <>
