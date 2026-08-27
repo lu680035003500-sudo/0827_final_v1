@@ -13,6 +13,10 @@ type Hole = {
 const MAX_HOLES = 24;
 const SPAWN_INTERVAL_MS = 700;
 const MAX_SPAWN_ATTEMPTS = 10;
+const MAX_HOLE_SIZE_PX = 40;
+// A rotated square's bounding box grows to size * sqrt(2); pad the forbidden
+// zone by that half-diagonal so the UFO's visible box never touches the cabinet.
+const HOLE_MARGIN_PX = (MAX_HOLE_SIZE_PX * Math.SQRT2) / 2;
 
 let nextHoleId = 0;
 
@@ -23,10 +27,10 @@ function getForbiddenZonePercent() {
   if (!cabinet) return null;
   const rect = cabinet.getBoundingClientRect();
   return {
-    left: (rect.left / window.innerWidth) * 100,
-    right: (rect.right / window.innerWidth) * 100,
-    top: (rect.top / window.innerHeight) * 100,
-    bottom: (rect.bottom / window.innerHeight) * 100,
+    left: ((rect.left - HOLE_MARGIN_PX) / window.innerWidth) * 100,
+    right: ((rect.right + HOLE_MARGIN_PX) / window.innerWidth) * 100,
+    top: ((rect.top - HOLE_MARGIN_PX) / window.innerHeight) * 100,
+    bottom: ((rect.bottom + HOLE_MARGIN_PX) / window.innerHeight) * 100,
   };
 }
 
