@@ -6,6 +6,7 @@ import { ThemeInitScript } from "@/components/theme/theme-init-script";
 import { BulletHoles } from "@/components/effects/bullet-holes";
 import { VolcanoEruption } from "@/components/effects/volcano-eruption";
 import { LiveClock } from "@/components/clock/live-clock";
+import { WanderingBear } from "@/components/effects/wandering-bear";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <LiveClock />
         <VolcanoEruption />
         {children}
+        <WanderingBear />
         <BulletHoles />
       </body>
     </html>

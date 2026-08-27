@@ -11,6 +11,7 @@ import { LadderGame } from "@/components/ladder-game/ladder-game";
 import { ArcadeCabinet } from "@/components/arcade/arcade-cabinet";
 import { RpsGame } from "@/components/rps/rps-game";
 import { ScratchLotteryModal } from "@/components/scratch-lottery/scratch-lottery-modal";
+import { SlotMachineGame } from "@/components/slot-machine/slot-machine-game";
 
 type Scores = {
   tetris: number;
@@ -18,6 +19,7 @@ type Scores = {
   ladder: number;
   rps: number;
   scratchLottery: number;
+  slotMachine: number;
 };
 
 export function Converter() {
@@ -26,15 +28,22 @@ export function Converter() {
   const [showLadderGame, setShowLadderGame] = useState(false);
   const [showRps, setShowRps] = useState(false);
   const [showScratchLottery, setShowScratchLottery] = useState(false);
+  const [showSlotMachine, setShowSlotMachine] = useState(false);
   const [scores, setScores] = useState<Scores>({
     tetris: 0,
     luckyDraw: 0,
     ladder: 0,
     rps: 0,
     scratchLottery: 0,
+    slotMachine: 0,
   });
   const totalScore =
-    scores.tetris + scores.luckyDraw + scores.ladder + scores.rps + scores.scratchLottery;
+    scores.tetris +
+    scores.luckyDraw +
+    scores.ladder +
+    scores.rps +
+    scores.scratchLottery +
+    scores.slotMachine;
 
   function addTetrisScore(lines: number) {
     setScores((prev) => ({ ...prev, tetris: prev.tetris + lines * 10 }));
@@ -62,6 +71,10 @@ export function Converter() {
 
   function addScratchLotteryLoseScore() {
     setScores((prev) => ({ ...prev, scratchLottery: prev.scratchLottery - 10 }));
+  }
+
+  function addSlotMachineScore() {
+    setScores((prev) => ({ ...prev, slotMachine: prev.slotMachine + 50 }));
   }
 
   return (
@@ -123,6 +136,15 @@ export function Converter() {
         >
           복권긁기
         </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-1/4 rounded-full border-2 border-black/30 bg-indigo-500 text-white shadow-[0_4px_0_rgba(0,0,0,0.45),inset_0_2px_2px_rgba(255,255,255,0.35)] hover:bg-indigo-500 hover:brightness-110 active:translate-y-1 active:shadow-none"
+          onClick={() => setShowSlotMachine(true)}
+        >
+          슬롯머신
+        </Button>
       </ArcadeCabinet>
 
       {showGame && (
@@ -156,6 +178,13 @@ export function Converter() {
           score={scores.scratchLottery}
           onWin={addScratchLotteryWinScore}
           onLose={addScratchLotteryLoseScore}
+        />
+      )}
+      {showSlotMachine && (
+        <SlotMachineGame
+          onClose={() => setShowSlotMachine(false)}
+          score={scores.slotMachine}
+          onWin={addSlotMachineScore}
         />
       )}
     </div>
