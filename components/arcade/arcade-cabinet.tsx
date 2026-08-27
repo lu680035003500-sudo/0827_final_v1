@@ -16,7 +16,7 @@ export function ArcadeCabinet({ children, score }: ArcadeCabinetProps) {
           <MiniBear delay="0.15s" />
         </div>
 
-        <div className="flex flex-1 items-center justify-between gap-3 rounded-lg border-2 border-neutral-700 bg-black px-4 py-3">
+        <div className="flex w-1/3 items-center justify-between gap-3 rounded-lg border-2 border-neutral-700 bg-black px-4 py-3">
           <span className="text-sm font-bold tracking-[0.3em] text-red-500 [text-shadow:0_0_8px_rgba(239,68,68,0.85)]">
             GAME ZONE
           </span>

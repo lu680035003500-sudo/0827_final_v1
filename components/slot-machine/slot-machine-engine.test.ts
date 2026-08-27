@@ -1,19 +1,38 @@
 import { describe, expect, test } from "vitest";
 
-import { judgeSpin } from "./slot-machine-engine";
+import { judgeGrid, type Grid } from "./slot-machine-engine";
 
-describe("judgeSpin", () => {
-  test("세 개가 모두 같으면 잭팟이다", () => {
-    expect(judgeSpin(["🍒", "🍒", "🍒"])).toBe("jackpot");
+describe("judgeGrid", () => {
+  test("가운데 줄이 전부 같으면 잭팟이다", () => {
+    const grid: Grid = [
+      ["🐋", "🐟", "🐙"],
+      ["🦀", "🦀", "🦀"],
+      ["🐚", "⭐", "🐋"],
+    ];
+    expect(judgeGrid(grid)).toBe("jackpot");
   });
 
-  test("두 개만 같으면 당첨이다", () => {
-    expect(judgeSpin(["🍒", "🍒", "🍋"])).toBe("win");
-    expect(judgeSpin(["🍒", "🍋", "🍒"])).toBe("win");
-    expect(judgeSpin(["🍋", "🍒", "🍒"])).toBe("win");
+  test("위 또는 아래 줄이 전부 같으면 당첨이다", () => {
+    const topMatch: Grid = [
+      ["🐋", "🐋", "🐋"],
+      ["🦀", "🐟", "🐙"],
+      ["🐚", "⭐", "🐋"],
+    ];
+    const bottomMatch: Grid = [
+      ["🐋", "🐟", "🐙"],
+      ["🦀", "🐟", "🐙"],
+      ["⭐", "⭐", "⭐"],
+    ];
+    expect(judgeGrid(topMatch)).toBe("win");
+    expect(judgeGrid(bottomMatch)).toBe("win");
   });
 
-  test("모두 다르면 꽝이다", () => {
-    expect(judgeSpin(["🍒", "🍋", "🍊"])).toBe("lose");
+  test("어느 줄도 맞지 않으면 꽝이다", () => {
+    const grid: Grid = [
+      ["🐋", "🐟", "🐙"],
+      ["🦀", "🐚", "⭐"],
+      ["🐟", "🐋", "🦀"],
+    ];
+    expect(judgeGrid(grid)).toBe("lose");
   });
 });

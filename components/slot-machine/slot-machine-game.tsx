@@ -5,14 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 import {
-  SYMBOLS,
-  judgeSpin,
+  GRID_SIZE,
+  createGrid,
+  judgeGrid,
   randomSymbol,
-  type SlotSymbol,
+  type Grid,
   type SpinResult,
 } from "./slot-machine-engine";
 
-const REEL_STOP_DELAYS = [600, 900, 1200];
+const COLUMN_STOP_DELAYS = [600, 900, 1200];
 const TICK_MS = 80;
 
 const RESULT_TEXT: Record<SpinResult, string> = {
@@ -28,7 +29,7 @@ type SlotMachineGameProps = {
 };
 
 export function SlotMachineGame({ onClose, score, onWin }: SlotMachineGameProps) {
-  const [reels, setReels] = useState<SlotSymbol[]>([SYMBOLS[0], SYMBOLS[0], SYMBOLS[0]]);
+  const [grid, setGrid] = useState<Grid>(() => createGrid());
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<SpinResult | null>(null);
   const timerIdsRef = useRef<number[]>([]);
@@ -47,38 +48,40 @@ export function SlotMachineGame({ onClose, score, onWin }: SlotMachineGameProps)
     setSpinning(true);
     setResult(null);
 
-    const finalReels: [SlotSymbol, SlotSymbol, SlotSymbol] = [
-      randomSymbol(),
-      randomSymbol(),
-      randomSymbol(),
-    ];
+    const finalGrid: Grid = createGrid();
 
-    [0, 1, 2].forEach((reelIndex) => {
-      const spinTimer = window.setInterval(() => {
-        setReels((prev) => {
-          const next = [...prev];
-          next[reelIndex] = randomSymbol();
+    for (let col = 0; col < GRID_SIZE; col++) {
+      const finalColumn = [finalGrid[0][col], finalGrid[1][col], finalGrid[2][col]];
+      const tickTimer = window.setInterval(() => {
+        setGrid((prev) => {
+          const next = prev.map((row) => [...row]);
+          for (let row = 0; row < GRID_SIZE; row++) {
+            next[row][col] = randomSymbol();
+          }
           return next;
         });
       }, TICK_MS);
-      timerIdsRef.current.push(spinTimer);
+      timerIdsRef.current.push(tickTimer);
 
       const stopTimer = window.setTimeout(() => {
-        window.clearInterval(spinTimer);
-        setReels((prev) => {
-          const next = [...prev];
-          next[reelIndex] = finalReels[reelIndex];
+        window.clearInterval(tickTimer);
+        setGrid((prev) => {
+          const next = prev.map((row) => [...row]);
+          for (let row = 0; row < GRID_SIZE; row++) {
+            next[row][col] = finalColumn[row];
+          }
           return next;
         });
-        if (reelIndex === 2) {
+
+        if (col === GRID_SIZE - 1) {
           setSpinning(false);
-          const spinResult = judgeSpin(finalReels);
+          const spinResult = judgeGrid(finalGrid);
           setResult(spinResult);
           if (spinResult !== "lose") onWin();
         }
-      }, REEL_STOP_DELAYS[reelIndex]);
+      }, COLUMN_STOP_DELAYS[col]);
       timerIdsRef.current.push(stopTimer);
-    });
+    }
   }
 
   return (
@@ -96,15 +99,19 @@ export function SlotMachineGame({ onClose, score, onWin }: SlotMachineGameProps)
         <h2 className="text-lg font-semibold">슬롯머신</h2>
         <p className="text-sm text-muted-foreground">점수: {score}</p>
 
-        <div className="flex gap-2 rounded-lg border border-border bg-background p-3">
-          {reels.map((symbol, index) => (
-            <div
-              key={index}
-              className="flex h-16 w-16 items-center justify-center rounded-md border border-border bg-muted text-3xl"
-            >
-              {symbol}
-            </div>
-          ))}
+        <div className="grid grid-cols-3 gap-2 rounded-lg border border-border bg-background p-3">
+          {grid.map((row, rowIndex) =>
+            row.map((symbol, colIndex) => (
+              <div
+                key={`${rowIndex}-${colIndex}`}
+                className={`flex h-14 w-14 items-center justify-center rounded-md border text-2xl ${
+                  rowIndex === 1 ? "border-yellow-400 bg-yellow-400/10" : "border-border bg-muted"
+                }`}
+              >
+                {symbol}
+              </div>
+            ))
+          )}
         </div>
 
         <Button type="button" onClick={handleSpin} disabled={spinning}>
