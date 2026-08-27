@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { FireworksOverlay } from "@/components/effects/fireworks-overlay";
 
 import {
   LANES,
@@ -107,7 +108,9 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4">
-      <div className="relative flex flex-col items-center gap-4 rounded-xl border border-border bg-card p-6 text-card-foreground">
+      <div className="relative flex flex-col items-center gap-4 overflow-hidden rounded-xl border border-border bg-card p-6 text-card-foreground">
+        <FireworksOverlay active={result?.label === WIN_LABEL} />
+
         <button
           type="button"
           onClick={onClose}
@@ -180,6 +183,8 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
 
           {game.outcomes.map((label, lane) => {
             const isLanded = result !== null && result.lane === lane;
+            const isWinBox = label === WIN_LABEL;
+            const fill = isWinBox ? "#facc15" : isLanded ? "#94a3b8" : "var(--muted)";
             return (
               <g key={`end-${lane}`}>
                 <rect
@@ -188,15 +193,16 @@ export function LadderGame({ onClose }: { onClose: () => void }) {
                   width={30}
                   height={18}
                   rx={3}
-                  fill={isLanded ? (label === WIN_LABEL ? "#facc15" : "#94a3b8") : "var(--muted)"}
-                  stroke="var(--border)"
+                  fill={fill}
+                  stroke={isLanded ? "#f97316" : "var(--border)"}
+                  strokeWidth={isLanded ? 2 : 1}
                 />
                 <text
                   x={laneX(lane)}
                   y={TOP_PADDING + LADDER_HEIGHT + 19}
                   textAnchor="middle"
                   fontSize={11}
-                  fill={isLanded ? "#111" : "var(--foreground)"}
+                  fill={isWinBox || isLanded ? "#111" : "var(--foreground)"}
                 >
                   {label}
                 </text>
