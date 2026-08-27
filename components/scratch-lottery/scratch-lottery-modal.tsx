@@ -114,23 +114,42 @@ export function ScratchLotteryModal({
         <p className="text-sm text-muted-foreground">점수: {score}</p>
 
         <div
-          className="relative overflow-hidden rounded-lg border border-border"
-          style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
+          className="overflow-hidden rounded-2xl border-4 border-yellow-500 bg-gradient-to-b from-red-600 to-red-700 shadow-lg"
+          style={{ width: CARD_WIDTH + 16 }}
         >
-          <div className="absolute inset-0 flex items-center justify-center bg-yellow-100 text-lg font-bold text-yellow-900">
-            {prize === "win" ? "🎉 당첨" : "꽝"}
+          <div className="flex items-center justify-center gap-1.5 border-b-2 border-dashed border-yellow-400 py-1.5">
+            <span aria-hidden="true" className="text-xs text-yellow-300">
+              ★
+            </span>
+            <span className="text-sm font-extrabold tracking-widest text-yellow-300 [text-shadow:0_1px_1px_rgba(0,0,0,0.5)]">
+              LG복권
+            </span>
+            <span aria-hidden="true" className="text-xs text-yellow-300">
+              ★
+            </span>
           </div>
-          <canvas
-            ref={canvasRef}
-            width={CARD_WIDTH}
-            height={CARD_HEIGHT}
-            aria-label="스크래치 복권 카드"
-            className="absolute inset-0 h-full w-full touch-none cursor-pointer"
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerLeave={handlePointerUp}
-          />
+
+          <div className="bg-white p-2">
+            <div
+              className="relative overflow-hidden rounded-md border border-black/10"
+              style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
+            >
+              <div className="absolute inset-0 flex items-center justify-center bg-yellow-100 text-lg font-bold text-yellow-900">
+                {prize === "win" ? "🎉 당첨" : "꽝"}
+              </div>
+              <canvas
+                ref={canvasRef}
+                width={CARD_WIDTH}
+                height={CARD_HEIGHT}
+                aria-label="스크래치 복권 카드"
+                className="absolute inset-0 h-full w-full touch-none cursor-pointer"
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerLeave={handlePointerUp}
+              />
+            </div>
+          </div>
         </div>
 
         {revealed && (
