@@ -9,7 +9,7 @@ type ArcadeCabinetProps = {
 
 export function ArcadeCabinet({ children, score }: ArcadeCabinetProps) {
   return (
-    <div className="rounded-2xl border-4 border-neutral-800 bg-gradient-to-b from-neutral-700 via-neutral-800 to-black p-4 shadow-[inset_0_2px_8px_rgba(255,255,255,0.08),0_10px_28px_rgba(0,0,0,0.45)]">
+    <div className="relative z-10 rounded-2xl border-4 border-neutral-800 bg-gradient-to-b from-neutral-700 via-neutral-800 to-black p-4 shadow-[inset_0_2px_8px_rgba(255,255,255,0.08),0_10px_28px_rgba(0,0,0,0.45)]">
       <div className="mb-4 flex items-center gap-2">
         <div className="flex gap-1">
           <MiniBear delay="0s" />

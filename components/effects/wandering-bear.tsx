@@ -28,7 +28,7 @@ export function WanderingBear() {
 
   return (
     <div
-      className="pointer-events-none fixed z-30"
+      className="pointer-events-none fixed z-0"
       style={
         {
           left: `${pos.x}%`,
