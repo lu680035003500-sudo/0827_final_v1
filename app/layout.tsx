@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeInitScript } from "@/components/theme/theme-init-script";
 import { BulletHoles } from "@/components/effects/bullet-holes";
+import { VolcanoEruption } from "@/components/effects/volcano-eruption";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ThemeInitScript />
       </head>
       <body className="min-h-full flex flex-col">
+        <VolcanoEruption />
         {children}
         <BulletHoles />
       </body>
